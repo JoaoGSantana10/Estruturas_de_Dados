@@ -9,7 +9,7 @@ int main()
     int n1, n2,op, soma, subtrair;
     printf("Informe o primeiro valor: ");
     scanf("%d", &n1);
-    printf("Infrome o segundo valor: ");
+    printf("Informe o segundo valor: ");
     scanf("%d", &n2);
     do
     {
