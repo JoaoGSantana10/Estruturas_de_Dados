@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // sistema de supermercado, que mantem a contagem de produtos diferentes em um vetor, e o valor do índice indica a quantidade no estoque. 
 
