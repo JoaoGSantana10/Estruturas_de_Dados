@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // Imprimir a nota de 80 alunos em 3 provas.
 
