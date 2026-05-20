@@ -1,0 +1,7 @@
+Produto: Mouse
+  Preço: R$ 50,00
+ Quantidade: 10
+
+Produto: Teclado
+  Preço: R$ 100,00
+ Quantidade: 5
