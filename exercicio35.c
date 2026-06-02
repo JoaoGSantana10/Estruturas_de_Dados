@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Resolução do primeiro exercício da Prova 1 de ESTRUTURA DE DADOS 1
+
 // Declare um vetor de inteiros de tamanho 10 e inicialize todos
 
 int main(){
