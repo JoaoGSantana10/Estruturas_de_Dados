@@ -68,5 +68,13 @@ void RelatorioComercio(TNoC *Inicio);
 void RelatorioServico(TDescritorS *DescritorS);
 void RelatorioComercioInvertido(TNoC *Fim);
 void RelatorioServicoInvertido(TDescritorS *DescritorS);
+void RelatorioUnificada(TDescritorU *Unificada);
+void relatorioListaUnificada(TDescritorU *Unificada);
+void relatorioListaUnificadaInvertida(TDescritorU *Unificada);
+void ApagarListaIndustria(TNoI *Inicio);
+void ApagarListaComercio(TNoC *Inicio);
+void ApagarListaServico(TDescritorS *DescritorS);
+void ApagarListaUnificada(TDescritorU *Unificada);
+
 
 #endif
