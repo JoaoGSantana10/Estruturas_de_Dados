@@ -172,8 +172,50 @@ void RelatorioIndustria(TNoI *Inicio){
 
 void RelatorioComercio(TNoC *Inicio){
     TNoC *atual = Inicio;
-    
+    while(atual != NULL){
+        printf("CNPJ: %s", atual->Dados->CNPJ);
+        printf("Razão Social: %s", atual->Dados->RazaoSocial);
+        printf("Cidade: %s", atual->Dados->Cidade);
+        printf("Fone: %s", atual->Dados->Fone);
+        printf("---------------------\n");
+        atual = atual->Prox;
+    }
+}
+
+void RelatorioServico(TDescritorS *DescritorS){
+    TNoS *atual = DescritorS->Inicio;
+    while(atual != NULL){
+        printf("CNPJ: %s", atual->Dados->CNPJ);
+        printf("Razão Social: %s", atual->Dados->RazaoSocial);
+        printf("Cidade: %s", atual->Dados->Cidade);
+        printf("Fone: %s", atual->Dados->Fone);
+        printf("---------------------\n");
+        atual = atual->Prox;
+    }
 }
 
 
+void RelatorioComercioInvertido(TNoC *Fim){
+    TNoC *atual = Fim;
+    while(atual != NULL){
+        printf("CNPJ: %s", atual->Dados->CNPJ);
+        printf("Razão Social: %s", atual->Dados->RazaoSocial);
+        printf("Cidade: %s", atual->Dados->Cidade);
+        printf("Fone: %s", atual->Dados->Fone);
+        printf("---------------------\n");
+        atual = atual->Ant;
+    }
+}
+
+void RelatorioServicoInvertido(TDescritorS *DescritorS){
+    TNoS *atual = DescritorS->Fim;
+    while(atual != NULL){
+        printf("CNPJ: %s", atual->Dados->CNPJ);
+        printf("Razão Social: %s", atual->Dados->RazaoSocial);
+        printf("Cidade: %s", atual->Dados->Cidade);
+        printf("Fone: %s", atual->Dados->Fone);
+        printf("---------------------\n");
+        atual = atual->Ant;
+    }
+}
 
