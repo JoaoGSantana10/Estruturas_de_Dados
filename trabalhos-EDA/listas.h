@@ -63,5 +63,10 @@ void InserirServico(TDescritorS *DescritorS, TCadastro *Dados);
 void CarregarServico(TDescritorS *DescritorS);
 void InserirListaUnificada(TDescritorU *Unificada, TCadastroU *Dados);
 void CarregarListaUnificada(TDescritorU *Unificada);
+void RelatorioIndustria(TNoI *Inicio);
+void RelatorioComercio(TNoC *Inicio);
+void RelatorioServico(TDescritorS *DescritorS);
+void RelatorioComercioInvertido(TNoC *Fim);
+void RelatorioServicoInvertido(TDescritorS *DescritorS);
 
 #endif
