@@ -158,7 +158,22 @@ void GerarListaUnificada(TNoI *Industria, TNoC *Comercio, TDescritorS *Servico, 
     } free(novo); // Libera a última alocação que não foi usada
 }
 
+void RelatorioIndustria(TNoI *Inicio){
+    TNoI *atual = Inicio;
+    while(atual != NULL){
+        printf("CNPJ: %s", atual->Dados->CNPJ);
+        printf("Razão Social: %s", atual->Dados->RazaoSocial);
+        printf("Cidade: %s", atual->Dados->Cidade);
+        printf("Fone: %s", atual->Dados->Fone);
+        printf("---------------------\n");
+        atual = atual->Prox;
+    }
+}
 
+void RelatorioComercio(TNoC *Inicio){
+    TNoC *atual = Inicio;
+    
+}
 
 
 
