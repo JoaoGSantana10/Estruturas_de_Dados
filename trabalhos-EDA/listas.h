@@ -55,4 +55,13 @@ typedef struct DescritorU{
     TNoU *Fim;
 } TDescritorU;
 
+TNoI *InserirIndustria(TNoI *Inicio, TCadastro *Dados);
+TNoI *CarregarIndustria(TNoI *Inicio);
+TNoC *InserirComercio(TNoC *Inicio, TCadastro *Dados);
+TNoC *CarregarComercio(TNoC *Inicio);
+void InserirServico(TDescritorS *DescritorS, TCadastro *Dados);
+void CarregarServico(TDescritorS *DescritorS);
+void InserirListaUnificada(TDescritorU *Unificada, TCadastroU *Dados);
+void CarregarListaUnificada(TDescritorU *Unificada);
+
 #endif
