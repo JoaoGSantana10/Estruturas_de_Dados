@@ -219,3 +219,80 @@ void RelatorioServicoInvertido(TDescritorS *DescritorS){
     }
 }
 
+void relatorioListaUnificada(TDescritorU *Unificada){
+    TNoU *atual = Unificada->Inicio;
+    while(atual != NULL){
+        printf("CNPJ: %s", atual->Dados->CNPJ);
+        printf("Razão Social: %s", atual->Dados->RazaoSocial);
+        printf("Cidade: %s", atual->Dados->Cidade);
+        printf("Fone: %s", atual->Dados->Fone);
+        printf("Tipo: %c\n", atual->Dados->Tipo);
+        printf("---------------------\n");
+        atual = atual->Prox;
+    }
+}
+
+void relatorioListaUnificadaInvertida(TDescritorU *Unificada){
+    TNoU *atual = Unificada->Fim;
+    while(atual != NULL){
+        printf("CNPJ: %s", atual->Dados->CNPJ);
+        printf("Razão Social: %s", atual->Dados->RazaoSocial);
+        printf("Cidade: %s", atual->Dados->Cidade);
+        printf("Fone: %s", atual->Dados->Fone);
+        printf("Tipo: %c\n", atual->Dados->Tipo);
+        printf("---------------------\n");
+        atual = atual->Ant;
+    }
+}
+
+void ApagarListaIndustria(TNoI *Inicio){
+    TNoI *atual = Inicio;
+    TNoI *proximo = NULL;
+    while(atual != NULL){
+        proximo = atual->Prox;
+        free(atual->Dados); // Libera os dados do nó
+        free(atual); // Libera o nó em si
+        atual = proximo; // Move para o próximo nó
+    }
+}
+
+void ApagarListaComercio(TNoC *Inicio){
+    TNoC *atual = Inicio;
+    TNoC *proximo = NULL;
+    while(atual != NULL){
+        proximo = atual->Prox;
+        free(atual->Dados); // Libera os dados do nó
+        free(atual); // Libera o nó em si
+        atual = proximo; // Move para o próximo nó
+    }
+}
+
+void ApagarListaServico(TDescritorS *DescritorS){
+    TNoS *atual = DescritorS->Inicio;
+    TNoS *proximo = NULL;
+    while(atual != NULL){
+        proximo = atual->Prox;
+        free(atual->Dados); // Libera os dados do nó
+        free(atual); // Libera o nó em si
+        atual = proximo; // Move para o próximo nó
+    }
+    DescritorS->Inicio = NULL; // Define o início como NULL após apagar a lista
+    DescritorS->Fim = NULL; // Define o fim como NULL após apagar a lista
+    DescritorS->Tamanho = 0; // Reseta o tamanho do descritor para 0
+}
+
+void ApagarListaUnificada(TDescritorU *Unificada){
+    TNoU *atual = Unificada->Inicio;
+    TNoU *proximo = NULL;
+    while(atual != NULL){
+        proximo = atual->Prox;
+        free(atual->Dados); // Libera os dados do nó
+        free(atual); // Libera o nó em si
+        atual = proximo; // Move para o próximo nó
+    }
+    Unificada->Inicio = NULL; // Define o início como NULL após apagar a lista
+    Unificada->Fim = NULL; // Define o fim como NULL após apagar a lista
+    Unificada->Tamanho = 0; // Reseta o tamanho do descritor para 0
+}
+
+
