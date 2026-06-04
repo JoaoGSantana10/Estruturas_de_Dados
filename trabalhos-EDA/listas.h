@@ -37,7 +37,7 @@ typedef struct NoS{
     struct NoS *Prox;
 } TNoS;
 
-typedef struct Descritor{
+typedef struct DescritorS{
     TNoS *Inicio;
     int Tamanho;
     TNoS *Fim;
