@@ -1,6 +1,15 @@
 #include "listas.h"
 
-TNoI *InserirIndustria(TNoI *Inicio, TCadastro *Dados){
+void removerNewline(char *str) {
+    int len = strlen(str);
+    if (len > 0 && str[len-1] == '\n')
+        str[len-1] = '\0';
+    len = strlen(str);
+    if (len > 0 && str[len-1] == '\r')
+        str[len-1] = '\0';
+}
+
+TNoI *InserirIndustrias(TNoI *Inicio, TCadastro *Dados){
     TNoI *novoNo = (TNoI*)malloc(sizeof(TNoI));
     if(novoNo == NULL){
         printf("Erro ao alocar memória para o novo nó.\n");
@@ -10,20 +19,25 @@ TNoI *InserirIndustria(TNoI *Inicio, TCadastro *Dados){
     novoNo->Prox = Inicio; // O novo nó aponta para o início da lista
     return novoNo; // O novo nó se torna a nova cabeça da lista
 }
-TNoI *CarregarIndustria(TNoI *Inicio){
-    FILE *Arquivo = fopen("Industria.txt", "r");
+TNoI *CarregarIndustrias(TNoI *Inicio){
+    FILE *Arquivo = fopen("Industrias.txt", "r");
     if(Arquivo == NULL){
         printf("Erro ao abrir o arquivo.\n");
         return Inicio; // Retorna a cabeça original se o arquivo não puder ser aberto
     }
     TCadastro *novo = malloc(sizeof(TCadastro));
-    while(fgets(novo->CNPJ, sizeof(novo->CNPJ),Arquivo)){
-        fgets(novo->RazaoSocial, sizeof(novo->RazaoSocial), Arquivo);
-        fgets(novo->Cidade, sizeof(novo->Cidade), Arquivo);
-        fgets(novo->Fone, sizeof(novo->Fone), Arquivo);
-        Inicio = InserirIndustria(Inicio, novo);
-        novo = malloc(sizeof(TCadastro)); // Aloca um novo cadastro para a próxima leitura
-    }
+   while(fgets(novo->CNPJ, sizeof(novo->CNPJ), Arquivo)){
+    removerNewline(novo->CNPJ);
+    if(strlen(novo->CNPJ) == 0) continue; // pula linha vazia
+    fgets(novo->RazaoSocial, sizeof(novo->RazaoSocial), Arquivo);
+    removerNewline(novo->RazaoSocial);
+    fgets(novo->Cidade, sizeof(novo->Cidade), Arquivo);
+    removerNewline(novo->Cidade);
+    fgets(novo->Fone, sizeof(novo->Fone), Arquivo);
+    removerNewline(novo->Fone);
+    Inicio = InserirIndustrias(Inicio, novo);
+    novo = malloc(sizeof(TCadastro));
+}
     free(novo); // Libera a última alocação que não foi usada
     fclose(Arquivo);
     return Inicio;
@@ -52,10 +66,15 @@ TNoC *CarregarComercio(TNoC *Inicio){
     }
     TCadastro *novo = malloc(sizeof(TCadastro)); // Aloca memória para um novo cadastro
     while(fgets(novo->CNPJ, sizeof(novo->CNPJ), Arquivo)){
+        removerNewline(novo->CNPJ); // Remove o \n do final da string
+        if(strlen(novo->CNPJ) == 0) continue; // pula linha vazia
         fgets(novo->RazaoSocial, sizeof(novo->RazaoSocial), Arquivo);
+        removerNewline(novo->RazaoSocial); // Remove o \n do final da string
         fgets(novo->Cidade, sizeof(novo->Cidade), Arquivo);
+        removerNewline(novo->Cidade); // Remove o \n do final da string
         fgets(novo->Fone, sizeof(novo->Fone), Arquivo);
-        Inicio = InserirComercio(Inicio, novo); // Insere o novo cadastro 
+        removerNewline(novo->Fone); // Remove o \n do final da string
+        Inicio = InserirComercio(Inicio, novo); // Insere o novo cadastro
         novo = malloc(sizeof(TCadastro)); // Aloca um novo cadastro para a próxima leitura
     }
     free(novo); // Libera a última alocação que não foi usada
@@ -90,9 +109,14 @@ void CarregarServico(TDescritorS *DescritorS){
     }
     TCadastro *novo = malloc(sizeof(TCadastro)); // Aloca memória para um novo cadastro
     while(fgets(novo->CNPJ, sizeof(novo->CNPJ), Arquivo)){
+        removerNewline(novo->CNPJ); // Remove o \n do final da string
+        if(strlen(novo->CNPJ) == 0) continue; // pula linha vazia
         fgets(novo->RazaoSocial, sizeof(novo->RazaoSocial), Arquivo);
+        removerNewline(novo->RazaoSocial); // Remove o \n do final da string
         fgets(novo->Cidade, sizeof(novo->Cidade), Arquivo);
+        removerNewline(novo->Cidade); // Remove o \n do final da string
         fgets(novo->Fone, sizeof(novo->Fone), Arquivo);
+        removerNewline(novo->Fone); // Remove o \n do final da string
         InserirServico(DescritorS, novo); // Insere o novo cadastro no descritor
         novo = malloc(sizeof(TCadastro)); // Aloca um novo cadastro para a próxima leitura
     }
@@ -119,22 +143,22 @@ void InserirListaUnificada(TDescritorU *Unificada, TCadastroU *Dados){
     }
 }
 
-void GerarListaUnificada(TNoI *Industria, TNoC *Comercio, TDescritorS *Servico, TDescritorU *Unificada){
+void GerarListaUnificada(TNoI *Industrias, TNoC *Comercio, TDescritorS *Servico, TDescritorU *Unificada){
  
-    TNoI *atualIndustria = Industria;
+    TNoI *atualIndustrias = Industrias;
     TNoC *atualComercio = Comercio;
     TNoS *atualServico = Servico->Inicio;
     
     TCadastroU *novo = malloc(sizeof(TCadastroU));
-    while(atualIndustria != NULL){
-        strcpy(novo->CNPJ, atualIndustria->Dados->CNPJ);
-        strcpy(novo->RazaoSocial, atualIndustria->Dados->RazaoSocial);
-        strcpy(novo->Cidade, atualIndustria->Dados->Cidade);
-        strcpy(novo->Fone, atualIndustria->Dados->Fone);
+    while(atualIndustrias != NULL){
+        strcpy(novo->CNPJ, atualIndustrias->Dados->CNPJ);
+        strcpy(novo->RazaoSocial, atualIndustrias->Dados->RazaoSocial);
+        strcpy(novo->Cidade, atualIndustrias->Dados->Cidade);
+        strcpy(novo->Fone, atualIndustrias->Dados->Fone);
         novo->Tipo = 'I';
         InserirListaUnificada(Unificada, novo);
         novo = malloc(sizeof(TCadastroU));
-        atualIndustria = atualIndustria->Prox;
+        atualIndustrias = atualIndustrias->Prox;
     } free(novo); // Libera a última alocação que não foi usada
     while( atualComercio != NULL){
         strcpy(novo->CNPJ, atualComercio->Dados->CNPJ);
@@ -158,13 +182,13 @@ void GerarListaUnificada(TNoI *Industria, TNoC *Comercio, TDescritorS *Servico, 
     } free(novo); // Libera a última alocação que não foi usada
 }
 
-void RelatorioIndustria(TNoI *Inicio){
+void RelatorioIndustrias(TNoI *Inicio){
     TNoI *atual = Inicio;
     while(atual != NULL){
-        printf("CNPJ: %s", atual->Dados->CNPJ);
-        printf("Razão Social: %s", atual->Dados->RazaoSocial);
-        printf("Cidade: %s", atual->Dados->Cidade);
-        printf("Fone: %s", atual->Dados->Fone);
+        printf("CNPJ: %s\n", atual->Dados->CNPJ);
+        printf("Razão Social: %s\n", atual->Dados->RazaoSocial);
+        printf("Cidade: %s\n", atual->Dados->Cidade);
+        printf("Fone: %s \n", atual->Dados->Fone);
         printf("---------------------\n");
         atual = atual->Prox;
     }
@@ -173,10 +197,10 @@ void RelatorioIndustria(TNoI *Inicio){
 void RelatorioComercio(TNoC *Inicio){
     TNoC *atual = Inicio;
     while(atual != NULL){
-        printf("CNPJ: %s", atual->Dados->CNPJ);
-        printf("Razão Social: %s", atual->Dados->RazaoSocial);
-        printf("Cidade: %s", atual->Dados->Cidade);
-        printf("Fone: %s", atual->Dados->Fone);
+        printf("CNPJ: %s\n", atual->Dados->CNPJ);
+        printf("Razão Social: %s\n", atual->Dados->RazaoSocial);
+        printf("Cidade: %s\n", atual->Dados->Cidade);
+        printf("Fone: %s\n", atual->Dados->Fone);
         printf("---------------------\n");
         atual = atual->Prox;
     }
@@ -185,10 +209,10 @@ void RelatorioComercio(TNoC *Inicio){
 void RelatorioServico(TDescritorS *DescritorS){
     TNoS *atual = DescritorS->Inicio;
     while(atual != NULL){
-        printf("CNPJ: %s", atual->Dados->CNPJ);
-        printf("Razão Social: %s", atual->Dados->RazaoSocial);
-        printf("Cidade: %s", atual->Dados->Cidade);
-        printf("Fone: %s", atual->Dados->Fone);
+        printf("CNPJ: %s\n", atual->Dados->CNPJ);
+        printf("Razão Social: %s\n", atual->Dados->RazaoSocial);
+        printf("Cidade: %s\n", atual->Dados->Cidade);
+        printf("Fone: %s\n", atual->Dados->Fone);
         printf("---------------------\n");
         atual = atual->Prox;
     }
@@ -198,10 +222,10 @@ void RelatorioServico(TDescritorS *DescritorS){
 void RelatorioComercioInvertido(TNoC *Fim){
     TNoC *atual = Fim;
     while(atual != NULL){
-        printf("CNPJ: %s", atual->Dados->CNPJ);
-        printf("Razão Social: %s", atual->Dados->RazaoSocial);
-        printf("Cidade: %s", atual->Dados->Cidade);
-        printf("Fone: %s", atual->Dados->Fone);
+        printf("CNPJ: %s\n", atual->Dados->CNPJ);
+        printf("Razão Social: %s\n", atual->Dados->RazaoSocial);
+        printf("Cidade: %s\n", atual->Dados->Cidade);
+        printf("Fone: %s\n", atual->Dados->Fone);
         printf("---------------------\n");
         atual = atual->Ant;
     }
@@ -210,42 +234,42 @@ void RelatorioComercioInvertido(TNoC *Fim){
 void RelatorioServicoInvertido(TDescritorS *DescritorS){
     TNoS *atual = DescritorS->Fim;
     while(atual != NULL){
-        printf("CNPJ: %s", atual->Dados->CNPJ);
-        printf("Razão Social: %s", atual->Dados->RazaoSocial);
-        printf("Cidade: %s", atual->Dados->Cidade);
-        printf("Fone: %s", atual->Dados->Fone);
+        printf("CNPJ: %s\n", atual->Dados->CNPJ);
+        printf("Razão Social: %s\n", atual->Dados->RazaoSocial);
+        printf("Cidade: %s\n", atual->Dados->Cidade);
+        printf("Fone: %s\n", atual->Dados->Fone);
         printf("---------------------\n");
         atual = atual->Ant;
     }
 }
 
-void relatorioListaUnificada(TDescritorU *Unificada){
+void RelatorioListaUnificada(TDescritorU *Unificada){
     TNoU *atual = Unificada->Inicio;
     while(atual != NULL){
-        printf("CNPJ: %s", atual->Dados->CNPJ);
-        printf("Razão Social: %s", atual->Dados->RazaoSocial);
-        printf("Cidade: %s", atual->Dados->Cidade);
-        printf("Fone: %s", atual->Dados->Fone);
+        printf("CNPJ: %s\n", atual->Dados->CNPJ);
+        printf("Razão Social: %s\n", atual->Dados->RazaoSocial);
+        printf("Cidade: %s\n", atual->Dados->Cidade);
+        printf("Fone: %s\n", atual->Dados->Fone);
         printf("Tipo: %c\n", atual->Dados->Tipo);
         printf("---------------------\n");
         atual = atual->Prox;
     }
 }
 
-void relatorioListaUnificadaInvertida(TDescritorU *Unificada){
+void RelatorioListaUnificadaInvertida(TDescritorU *Unificada){
     TNoU *atual = Unificada->Fim;
     while(atual != NULL){
-        printf("CNPJ: %s", atual->Dados->CNPJ);
-        printf("Razão Social: %s", atual->Dados->RazaoSocial);
-        printf("Cidade: %s", atual->Dados->Cidade);
-        printf("Fone: %s", atual->Dados->Fone);
+        printf("CNPJ: %s\n", atual->Dados->CNPJ);
+        printf("Razão Social: %s\n", atual->Dados->RazaoSocial);
+        printf("Cidade: %s\n", atual->Dados->Cidade);
+        printf("Fone: %s\n", atual->Dados->Fone);
         printf("Tipo: %c\n", atual->Dados->Tipo);
         printf("---------------------\n");
         atual = atual->Ant;
     }
 }
 
-void ApagarListaIndustria(TNoI *Inicio){
+void ApagarListaIndustrias(TNoI *Inicio){
     TNoI *atual = Inicio;
     TNoI *proximo = NULL;
     while(atual != NULL){
@@ -286,7 +310,7 @@ void ApagarListaUnificada(TDescritorU *Unificada){
     TNoU *proximo = NULL;
     while(atual != NULL){
         proximo = atual->Prox;
-        free(atual->Dados); // Libera os dados do nó
+        //free(atual->Dados); // Libera os dados do nó
         free(atual); // Libera o nó em si
         atual = proximo; // Move para o próximo nó
     }
