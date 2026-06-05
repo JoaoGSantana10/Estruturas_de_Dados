@@ -6,14 +6,14 @@
 #include <string.h>
 
 typedef struct Cadastro{
-    char CNPJ[15];
+    char CNPJ[20];
     char RazaoSocial[50];
     char Cidade[30];
     char Fone[12];
 } TCadastro;
 
 typedef struct CadastroU{
-    char CNPJ[15];
+    char CNPJ[20];
     char RazaoSocial[50];
     char Cidade[30];
     char Fone[12];
@@ -55,23 +55,22 @@ typedef struct DescritorU{
     TNoU *Fim;
 } TDescritorU;
 
-TNoI *InserirIndustria(TNoI *Inicio, TCadastro *Dados);
-TNoI *CarregarIndustria(TNoI *Inicio);
+TNoI *InserirIndustrias(TNoI *Inicio, TCadastro *Dados);
+TNoI *CarregarIndustrias(TNoI *Inicio);
 TNoC *InserirComercio(TNoC *Inicio, TCadastro *Dados);
 TNoC *CarregarComercio(TNoC *Inicio);
 void InserirServico(TDescritorS *DescritorS, TCadastro *Dados);
 void CarregarServico(TDescritorS *DescritorS);
 void InserirListaUnificada(TDescritorU *Unificada, TCadastroU *Dados);
-void CarregarListaUnificada(TDescritorU *Unificada);
-void RelatorioIndustria(TNoI *Inicio);
+void GerarListaUnificada(TNoI *Industrias, TNoC *Comercio, TDescritorS *Servico, TDescritorU *Unificada);
+void RelatorioIndustrias(TNoI *Inicio);
 void RelatorioComercio(TNoC *Inicio);
 void RelatorioServico(TDescritorS *DescritorS);
 void RelatorioComercioInvertido(TNoC *Fim);
 void RelatorioServicoInvertido(TDescritorS *DescritorS);
-void RelatorioUnificada(TDescritorU *Unificada);
-void relatorioListaUnificada(TDescritorU *Unificada);
-void relatorioListaUnificadaInvertida(TDescritorU *Unificada);
-void ApagarListaIndustria(TNoI *Inicio);
+void RelatorioListaUnificada(TDescritorU *Unificada);
+void RelatorioListaUnificadaInvertida(TDescritorU *Unificada);
+void ApagarListaIndustrias(TNoI *Inicio);
 void ApagarListaComercio(TNoC *Inicio);
 void ApagarListaServico(TDescritorS *DescritorS);
 void ApagarListaUnificada(TDescritorU *Unificada);
