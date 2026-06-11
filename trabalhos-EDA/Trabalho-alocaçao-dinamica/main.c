@@ -22,7 +22,7 @@ int main(){
             printf("Quantos dias você deseja armazenar de medidas: ");
             scanf("%d", &temps.qtde_dias);
             temps.medidas = (TMedidas*) malloc(temps.qtde_dias * sizeof(TMedidas));
-            for(int i; i < temps.qtde_dias; i++){
+            for(int i = 0; i < temps.qtde_dias; i++){
                 temps.medidas[i].temperatura = (float*) malloc(sizeof(float));
             }
             temps.qtde_medidas= 0;
@@ -42,10 +42,45 @@ int main(){
             }
           break;
       case 3:
-          printf("Em construção\n");
+            if (temps.medidas == NULL || temps.qtde_medidas == 0)
+            {
+                printf("Nenhuma medida registrada!");
+            } else {
+                float soma = 0;
+                for (int i = 0; i < temps.qtde_medidas; i++)
+                {
+                    soma += *temps.medidas[i].temperatura;
+                }
+                float media = soma / temps.qtde_medidas;
+                
+                int IMaior = 0;
+                int IMenor = 0;
+
+                for (int i = 1; i < temps.qtde_medidas; i++)
+                {
+                    if (*temps.medidas[i].temperatura > *temps.medidas[IMaior].temperatura)
+                    {
+                        IMaior = i;
+                    } else if (*temps.medidas[i].temperatura < *temps.medidas[IMenor].temperatura)
+                    {
+                        IMenor = i;
+                    }
+                }
+                printf("A média da temperatura é: %f\n", media);
+                printf("A maior temperatura foi: %s - %f\n", temps.medidas[IMaior].cidade, *temps.medidas[IMaior].temperatura);
+                printf("A menor temperatura foi: %s - %f\n", temps.medidas[IMenor].cidade, *temps.medidas[IMenor].temperatura);
+                
+            }
           break;
       case 0:
-          printf("Encerrando o programa");
+            if (temps.medidas != NULL)
+            {
+                for (int i = 0; i < temps.qtde_dias; i++)
+                {
+                  free(temps.medidas[i].temperatura);
+                }
+            }
+          free(temps.medidas);
           break;
       default:
           break;
