@@ -54,6 +54,7 @@ int main(int argc, char const *argv[])
   i = 3 [1, 1, 3, 4, 5]
   i = 2 [1, 1, 3, 4, 5]
   i = 1 [1, 1, 3, 4, 5]
+  -------------------------------------
 
   Intercalação (Merge Sort)
 
